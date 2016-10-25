@@ -16,6 +16,7 @@
 
 #include "SDLDisp.h"
 #include "EncodeSaver.h"
+#include "EncodeSaver2.h"
 
 
 class Common {

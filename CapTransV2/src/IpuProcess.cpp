@@ -117,7 +117,7 @@ int IpuProcess::IPUConvent(void *in,void *out)
 	gettimeofday(&endtime, NULL);
 	double timeuse = 1000000*(endtime.tv_sec - begintime.tv_sec)+endtime.tv_usec-begintime.tv_usec;
 	timeuse /=1000;//除以1000则进行毫秒计时，如果除以1000000则进行秒级别计时，如果除以1则进行微妙级别计时
-	printf("yuv2rgb use %f ms\n",timeuse);
+	//printf("yuv2rgb use %f ms\n",timeuse);
 	memcpy(out,outbuf,ipuOutputSize);
 	return 0;
 }

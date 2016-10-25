@@ -34,6 +34,7 @@ private:
 	IpuProcess *ipu;
 	SDLDisp *sdl;
 	EncodeSaver *encoder;
+	EncodeSaver2 *encoder2;
 
 };
 

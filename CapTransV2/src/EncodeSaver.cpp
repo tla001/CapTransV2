@@ -48,9 +48,12 @@ int EncodeSaver::initDevice()
 	pCodecCtx->width = in_w;
 	pCodecCtx->height = in_h;
 	pCodecCtx->time_base.num = 1;
-	pCodecCtx->time_base.den = 25;
+	pCodecCtx->time_base.den = 18;
 	pCodecCtx->bit_rate = 400000;
-	pCodecCtx->gop_size=10;
+	pCodecCtx->gop_size=250;
+	//ÉèÖÃ
+	video_st->time_base.num=1;
+	video_st->time_base.den=18;
 	//H264
 	pCodecCtx->me_range = 16;
 	pCodecCtx->max_qdiff = 4;
@@ -99,6 +102,7 @@ int EncodeSaver::initDevice()
 	avformat_write_header(pFormatCtx,NULL);
 	av_new_packet(&pkt,basicsize*3);
 }
+
 int EncodeSaver::closeDevice()
 {
 	int ret = flush_encoder(pFormatCtx,0);
@@ -106,7 +110,6 @@ int EncodeSaver::closeDevice()
 		printf("Flushing encoder failed\n");
 		return -1;
 	}
-
 	//Ð´ÎÄ¼þÎ²
 	av_write_trailer(pFormatCtx);
 
@@ -154,6 +157,7 @@ int EncodeSaver::doEncode(unsigned char *buf)
 			if (pCodecCtx->coded_frame->key_frame)
 			{
 				pkt.flags |= AV_PKT_FLAG_KEY;
+				printf("here 1\n");
 			}
 			pkt.stream_index = video_st->index;
 			pkt.data = picture_buf;

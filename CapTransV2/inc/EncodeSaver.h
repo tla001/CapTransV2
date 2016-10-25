@@ -10,7 +10,10 @@
 
 #include "Common.h"
 
+#include <queue>
+
 class EncodeSaver {
+
 public:
 	EncodeSaver(int in_w,int in_h,int out_w,int out_h,char* out_file);
 	virtual ~EncodeSaver();
@@ -20,6 +23,7 @@ public:
 	int doEncode(unsigned char *buf);
 	int doEncode2(unsigned char *buf);
 	int flush_encoder(AVFormatContext *fmt_ctx,unsigned int stream_index);
+
 
 private:
 	AVFormatContext* pFormatCtx;

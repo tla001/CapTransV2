@@ -217,7 +217,7 @@ int V4L2Capture::getFrame(void **frame_buf, size_t* len)
 		printf("VIDIOC_DQBUF error\n");
 		return -1;
 	}
-	printf("queue_buf.index=%d\n",queue_buf.index);
+	//printf("queue_buf.index=%d\n",queue_buf.index);
 	//pthread_rwlock_wrlock(&rwlock);
 	*frame_buf = buffers[queue_buf.index].start;
 	*len = buffers[queue_buf.index].length;

@@ -13,6 +13,7 @@ CapFbTest::CapFbTest() {
 	static char dev_fb[]="/dev/fb0";
 	static char dev_ipu[]="/dev/mxc_ipu";
 	static char outfile[]="captest.avi";
+	static char outfile2[]="ccaptest.avi";
 
 	this->screen_w=640;
 	this->screen_h=480;
@@ -22,6 +23,7 @@ CapFbTest::CapFbTest() {
 	ipu=new IpuProcess(dev_ipu);
 	sdl=new SDLDisp(screen_w,screen_h);
 	encoder=new EncodeSaver(screen_w,screen_h,screen_w,screen_h,outfile);
+	encoder2=new EncodeSaver2(screen_w,screen_h,screen_w,screen_h,outfile2);
 
 
 	this->rgbFrame=(unsigned char *)malloc(screen_w* screen_h* 3 * sizeof(char));
@@ -34,6 +36,7 @@ CapFbTest::CapFbTest() {
 CapFbTest::~CapFbTest() {
 	// TODO Auto-generated destructor stub
 	encoder->closeDevice();
+	encoder2->closeDevice();
 	fb->closeDevice();
 	ipu->closeDevice();
 	cap->closeDevice();
@@ -54,10 +57,12 @@ void CapFbTest::CapVideoInit()
 	ipu->initDevice(1);//framebuffer sdl switch
 
 	encoder->initDevice();
+	encoder2->initDevice();
 
 	if(cap->startCapture()<0){
 		printf("start capture failed\n");
 		encoder->closeDevice();
+		encoder2->closeDevice();
 		cap->closeDevice();
 		fb->closeDevice();
 		ipu->closeDevice();
@@ -76,7 +81,7 @@ void CapFbTest::dispVideo()
 		printf("getFrame exit\n");
 		exit(-1);
 	}
-	printf("getFrame return len=%d\n",len);
+	//printf("getFrame return len=%d\n",len);
 	//显示部分
 	//printf("disp\n");
 
@@ -93,7 +98,8 @@ void CapFbTest::dispVideo()
 	//sdl->normalSDLDisp(yuvFrame);
 
 	//encoder->doEncode(yuv420Frame);//420p
-	encoder->doEncode2(yuvFrame);//422
+	//encoder->doEncode2(yuvFrame);//422
+	encoder2->doEncode(yuvFrame);//422
 	//sendUDPdata(rgbFrame,ipuOutputSize);
 	//将buffer返回队列
 	ret=cap->backFrame();
